@@ -1,0 +1,32 @@
+<%- include("header") -%>
+
+  <div class="box" id="heading">
+    <h1> <%= listTitle %> </h1>
+  </div>
+
+  <div class="box">
+    <% for (let i=0; i<newListItems.length; i++) { %>
+      <form action="/delete" method="post">
+        <div class="item">
+          <input type="checkbox" name="checkboxData" value = "<%=newListItems[i]._id%>" onchange="this.form.submit()">  
+          <!-- name is giving to access the input
+           Whenever we have a submit btn inside a form its job is to send all the data in the form in request, how do we submit if we check the checkbox 
+           now when a check box is checked , it will take the current form that the input is inside
+           so now when we check the box the value will be 'on' inside req.body.checkboxData as the on data is not just useful,
+           to get the item also we assign the id of the item to the value, now on checked we will get the id in req.body.checkboxData -->
+          <p><%=  newListItems[i].name  %></p>
+        </div>
+        <!-- as we need to send listname also to delete item from that list, but we need to get the value of title, we use input type hidden -->
+        <input type="hidden" name="listName" value="<%=listTitle%>"></input>
+      </form>
+      
+      <% } %>
+
+      <form class="item" action="/" method="post">
+        <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+        <button type="submit" name="list" value="<%=listTitle%>">+</button>  
+        <!-- value will be what ever listtitle and name of field is list so, req.body.lis -->
+      </form>
+  </div>
+
+<%- include("footer") -%>
